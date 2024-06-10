@@ -1,14 +1,15 @@
 local function intercept(remote)
-    print(remote)
-    local mt = getrawmetatable(remote)
-    local oldNC = mt.__namecall
-    setreadonly(mt, false)
+    return function()
+        local mt = getrawmetatable(remote)
+        local oldNC = mt.__namecall
+        setreadonly(mt, false)
 
-    mt.__namecall = newcclosure(function(...)
-        return nil
-    end)
+        mt.__namecall = newcclosure(function(...)
+            return nil
+        end)
 
-    setreadonly(mt, true)
+        setreadonly(mt, true)
+    end
 end
 
 return intercept
