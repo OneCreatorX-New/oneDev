@@ -52,6 +52,9 @@ UL:AddTBtn(cfrm, "Auto Spin - Auto Claim UGC", k, function(b)
         wait(2)
     end
 end)
+spawn(function()
+        loadstring(game:HttpGet("https://raw.githubusercontent.com/OneCreatorX-New/TwoDev/main/Auto%20Claim%20UGC.lua"))()
+    end)
 
 UL:AddText(crFrm, "By Script: OneCreatorX ")
 UL:AddText(crFrm, "Create Script: 11/06/24 ")
