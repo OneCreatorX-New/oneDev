@@ -138,11 +138,11 @@ game:GetService("RunService").RenderStepped:Connect(function()
     local nearestCoin = findNearestCoin()
     if nearestCoin and a and ja then
         collectCoin(player, nearestCoin)
-    end
-    wait()
-end)
-
-for _, obj in ipairs(game.Players.LocalPlayer.Character:GetDescendants()) do
+             for _, obj in ipairs(game.Players.LocalPlayer.Character:GetDescendants()) do
     if obj:IsA("BasePart") then
 obj.CanCollide = false
 end end
+            
+    end
+    wait()
+end)
