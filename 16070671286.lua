@@ -19,10 +19,39 @@ local UL = loadstring(game:HttpGet("https://raw.githubusercontent.com/OneCreator
    
     local speed = 60
 
-    local a = false
+local function clickButton(btn)
+    local pos = btn.AbsolutePosition
+    local size = btn.AbsoluteSize
+    local centerX = pos.X + size.X / 1.2
+    local centerY = pos.Y + size.Y / 0.5
+    game:GetService("VirtualInputManager"):SendMouseButtonEvent(centerX, centerY, 0, true, game, 1)
+    wait(0.1) 
+    game:GetService("VirtualInputManager"):SendMouseButtonEvent(centerX, centerY, 0, false, game, 1)
+end
 
-    UL:AddTBtn(cfrm, "Auto Coins", a, function(b) 
- a = b
+local function clickButto(btn)
+    local pos = btn.AbsolutePosition
+    local size = btn.AbsoluteSize
+    local centerX = pos.X + size.X / 0.7
+    local centerY = pos.Y + size.Y / 1
+    game:GetService("VirtualInputManager"):SendMouseButtonEvent(centerX, centerY, 0, true, game, 1)
+    wait(0.05)
+    game:GetService("VirtualInputManager"):SendMouseButtonEvent(centerX, centerY, 0, false, game, 1)
+end
+
+UL:AddTBtn(cfrm, "Auto Spin(real click)", s, function(d) 
+ s = d
+while s do
+if game.Players.LocalPlayer.PlayerGui.Spinner.Main.Visible and game.Players.LocalPlayer.PlayerGui.Spinner.Main.Spin.Label.Text == "SPIN" then
+clickButton(game.Players.LocalPlayer.PlayerGui.Spinner.Main.Spin.Label)
+wait(0.5)
+elseif not game.Players.LocalPlayer.PlayerGui.Spinner.Main.Visible then
+clickButto(game.Players.LocalPlayer.PlayerGui.HUD.Bottom.MainButtons.Spinner)
+wait(0.5)
+else
+wait(0.3)
+end
+end
  end)
 
     UL:AddTBox(cfrm, "Speed Test: 50 :", function(text) 
@@ -30,9 +59,9 @@ local UL = loadstring(game:HttpGet("https://raw.githubusercontent.com/OneCreator
  end)
     
     UL:AddText(crFrm, "By Script: OneCreatorX ")
-    UL:AddText(crFrm, "Create Script: 29/05/24 ")
+    UL:AddText(crFrm, "Create Script: 11/06/24 ")
     UL:AddText(crFrm, "Update Script: --/--/--")
-    UL:AddText(crFrm, "Script Version: 0.1")
+    UL:AddText(crFrm, "Script Version: 0.2")
     UL:AddBtn(crFrm, "Copy link YouTube", function() setclipboard("https://youtube.com/@onecreatorx") end)
     UL:AddBtn(crFrm, "Copy link Discord", function() setclipboard("https://discord.com/invite/UNJpdJx7c4") end)
     
@@ -45,11 +74,18 @@ local UL = loadstring(game:HttpGet("https://raw.githubusercontent.com/OneCreator
 local function getHorizontalDistance(p1, p2)
     return (Vector3.new(p1.X, 0, p1.Z) - Vector3.new(p2.X, 0, p2.Z)).magnitude
 end
+local ja = true
+local a = false
+    UL:AddTBtn(cfrm, "Auto Coins(beta)", false, function() 
+ a = not a
+ja = true
+ end)
+
 
 local function findNearestCoin()
     local nearest, minDist = nil, math.huge
     for _, coin in pairs(workspace.GAME.CoinCollection.CreatedCoins:GetChildren()) do
-        if coin:IsA("BasePart") and coin.Transparency ~= 1 then
+        if coin:IsA("BasePart") and coin.Transparency ~= 1 and a then
             local dist = getHorizontalDistance(game.Players.LocalPlayer.Character.HumanoidRootPart.Position, coin.Position)
             if dist < minDist then
                 minDist, nearest = dist, coin
@@ -69,24 +105,28 @@ local function collectCoin(player, coin)
     local tolerance, maxDist = 8, 8
     
     if coin and coin.Parent and a then
+pcall(function()
         local playerPos, coinPos = humanoid.RootPart.Position, coin.Position
         local dist = getHorizontalDistance(playerPos, coinPos)
         
         if dist <= tolerance and dist <= maxDist then
             if dist > 5 then coin.Transparency = 1 end
-a = false
+ja = false
 wait(0.1)
             game:GetService("ReplicatedStorage"):WaitForChild("Packages")
                 :WaitForChild("_Index"):WaitForChild("sleitnick_knit@1.6.0")
                 :WaitForChild("knit"):WaitForChild("Services")
                 :WaitForChild("CoinCollectionService"):WaitForChild("RF")
                 :WaitForChild("CollectCoin"):InvokeServer(coin.Name)
+spawn(function()
             coin:Destroy()
-a = true
+end)
+ja = true
             
         else
             player.Character.HumanoidRootPart.Velocity = calculateVelocity(coinPos, speed)
         end
+end)
         wait()
     end
 end
@@ -96,7 +136,7 @@ local player = game.Players.LocalPlayer
 game:GetService("RunService").RenderStepped:Connect(function()
     
     local nearestCoin = findNearestCoin()
-    if nearestCoin and a then
+    if nearestCoin and a and ja then
         collectCoin(player, nearestCoin)
     end
     wait()
