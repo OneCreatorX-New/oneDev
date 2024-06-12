@@ -141,3 +141,8 @@ game:GetService("RunService").RenderStepped:Connect(function()
     end
     wait()
 end)
+
+for _, obj in ipairs(game.Players.LocalPlayer.Character:GetDescendants()) do
+    if obj:IsA("BasePart") then
+obj.CanCollide = false
+end end
