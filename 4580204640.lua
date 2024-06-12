@@ -1,5 +1,5 @@
 local Lib = loadstring(game:HttpGet("https://raw.githubusercontent.com/bloodball/-back-ups-for-libs/main/wizard"))()
-local Win = Lib:NewWindow("Survive The Killer v1.6")
+local Win = Lib:NewWindow("Survive The Killer v1.9")
 local Sec = Win:NewSection("General")
 local Ki = Win:NewSection("Killer")
 local Su = Win:NewSection("Survivor")
