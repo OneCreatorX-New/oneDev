@@ -80,8 +80,8 @@ UL:AddTBtn(cfrm, "Auto Click", false, function(b)
     end
 end)
 
-UL:AddTBtn(cfrm, "Auto Rebirth", false, function(b)
-    local h = b
+UL:AddTBtn(cfrm, "Auto Rebirth", h, function(uu)
+     h = uu
     while h do
         game:GetService("ReplicatedStorage"):WaitForChild("Packages"):WaitForChild("_Index"):WaitForChild("sleitnick_knit@1.4.7"):WaitForChild("knit"):WaitForChild("Services"):WaitForChild("GameService"):WaitForChild("RF"):WaitForChild("RequestPurchaseRebirth"):InvokeServer()
         wait(0.5)
