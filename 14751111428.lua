@@ -84,7 +84,7 @@ UL:AddTBtn(cfrm, "Auto Rebirth", false, function(b)
     local h = b
     while h do
         game:GetService("ReplicatedStorage"):WaitForChild("Packages"):WaitForChild("_Index"):WaitForChild("sleitnick_knit@1.4.7"):WaitForChild("knit"):WaitForChild("Services"):WaitForChild("GameService"):WaitForChild("RF"):WaitForChild("RequestPurchaseRebirth"):InvokeServer()
-        wait(2)
+        wait(0.5)
     end
 end)
 
