@@ -17,7 +17,7 @@ local UL = loadstring(game:HttpGet("https://raw.githubusercontent.com/OneCreator
     local sg = UL:CrSG("Default")
     local frm, cfrm, crFrm = UL:CrFrm(sg, gameName)
    
-    local speed = 60
+    local speed = 50
 
 local function clickButton(btn)
     local pos = btn.AbsolutePosition
@@ -60,8 +60,8 @@ end
     
     UL:AddText(crFrm, "By Script: OneCreatorX ")
     UL:AddText(crFrm, "Create Script: 11/06/24 ")
-    UL:AddText(crFrm, "Update Script: --/--/--")
-    UL:AddText(crFrm, "Script Version: 0.2")
+    UL:AddText(crFrm, "Update Script: 16/06/24")
+    UL:AddText(crFrm, "Script Version: 0.5")
     UL:AddBtn(crFrm, "Copy link YouTube", function() setclipboard("https://youtube.com/@onecreatorx") end)
     UL:AddBtn(crFrm, "Copy link Discord", function() setclipboard("https://discord.com/invite/UNJpdJx7c4") end)
     
