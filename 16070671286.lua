@@ -102,7 +102,7 @@ end
 
 local function collectCoin(player, coin)
     local humanoid = player.Character:WaitForChild("Humanoid")
-    local tolerance, maxDist = 8, 8
+    local tolerance, maxDist =4, 4
     
     if coin and coin.Parent and a then
 pcall(function()
@@ -110,17 +110,15 @@ pcall(function()
         local dist = getHorizontalDistance(playerPos, coinPos)
         
         if dist <= tolerance and dist <= maxDist then
-            if dist > 5 then coin.Transparency = 1 end
+            if dist > 2 then
 ja = false
-wait(0.1)
-            game:GetService("ReplicatedStorage"):WaitForChild("Packages")
-                :WaitForChild("_Index"):WaitForChild("sleitnick_knit@1.6.0")
-                :WaitForChild("knit"):WaitForChild("Services")
-                :WaitForChild("CoinCollectionService"):WaitForChild("RF")
-                :WaitForChild("CollectCoin"):InvokeServer(coin.Name)
-spawn(function()
-            coin:Destroy()
-end)
+wait(0.5)
+coin.Position = p.Character.PrimaryPart.Position
+end
+
+coin.Transparency = 1 
+wait(0.5)
+coin:Destroy()
 ja = true
             
         else
