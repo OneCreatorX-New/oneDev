@@ -237,6 +237,7 @@ end)
               [2] = 500
             }
             game:GetService("ReplicatedStorage"):WaitForChild("RemoteEvents"):WaitForChild("DroneHit"):FireServer(unpack(args))
+                        wait()
 end 
       end
     end
