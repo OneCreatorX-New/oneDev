@@ -1,19 +1,22 @@
-local Lib = loadstring(game:HttpGet("https://raw.githubusercontent.com/bloodball/-back-ups-for-libs/main/wizard"))()
-local Win = Lib:NewWindow("Netflix NextWorld v1.5")
-local Sec = Win:NewSection("Options")
-local Sec3 = Win:NewSection("UGC-Strangers Thing")
-local Sec2 = Win:NewSection("Credits: OneCreatorX")
-local Players = game:GetService("Players")
-local Player = Players.LocalPlayer
-local jay = loadstring(game:HttpGet("https://raw.githubusercontent.com/OneCreatorX/OneCreatorX/main/Scripts/UGCfree/Ning/Info.lua"))
-spawn(function() jay() end)
-local function copyToClipboard(text)
-    if syn then
-        syn.write_clipboard(text)
-    else
-        setclipboard(text)
+local UL = loadstring(game:HttpGet("https://raw.githubusercontent.com/OneCreatorX/OneCreatorX/main/UIs/MyLibrery.lua"))()
+    
+    local gameName = ""
+    if gameName == "" then
+        gameName = game:GetService("MarketplaceService"):GetProductInfo(game.PlaceId).Name
     end
-end
+    
+    local function cleanGameName(name)
+        name = name:gsub("%b[]", "")
+        name = name:match("^[^:]*")
+        return name:match("^%s*(.-)%s*$")
+    end
+    
+    gameName = cleanGameName(gameName)
+    
+    local Player = game.Players.LocalPlayer
+    local sg = UL:CrSG("Default")
+    local frm, cfrm, crFrm = UL:CrFrm(sg, gameName)
+   
 
 local autoKillMobs = false
 local autoCollect = false
@@ -101,7 +104,13 @@ function Tk()
         
         for _, enemy in ipairs(enemies) do
             if enemy:IsA("Model") and enemy.PrimaryPart then
-                game:GetService("ReplicatedStorage"):WaitForChild("RemoteEvents"):WaitForChild("FireSlingshot"):FireServer(enemy, 50)
+          local args = {
+    [1] = enemy,
+    [2] = 50
+}
+
+game:GetService("ReplicatedStorage"):WaitForChild("RemoteEvents"):WaitForChild("FireSlingshot"):FireServer(unpack(args))
+      
             end
         end
     end
@@ -154,14 +163,6 @@ function npcs()
     end
 end
 
-function copyd()
-    copyToClipboard("https://discord.com/invite/23kFrRBSfD")
-end
-
-function copyy()
-    copyToClipboard("https://youtube.com/@OneCreatorX")
-end
-
 function page()
     for i = 1, 100 do
         local args = {
@@ -173,66 +174,73 @@ function page()
     end
 end
 
-function gametp()
-local args = {
-    [1] = "Dustin"
-}
-
-game:GetService("ReplicatedStorage"):WaitForChild("RemoteEvents"):WaitForChild("FinishTalking"):FireServer(unpack(args))
-
-local args = {[1] = "Quest006"
-}
-
-game:GetService("ReplicatedStorage"):WaitForChild("RemoteEvents"):WaitForChild("AcceptQuest"):FireServer(unpack(args))
-task.wait(2)
-local args = {
-    [1] = 16037286759
-}
-
-game:GetService("ReplicatedStorage"):WaitForChild("RemoteEvents"):WaitForChild("RequestTP"):FireServer(unpack(args))
-end
-
-function ins()
-for _, descendant in ipairs(workspace:GetDescendants()) do
-                if descendant:IsA("ProximityPrompt") then
-                    fireproximityprompt(descendant)
-                end
-            end
-wait(1)
-game:GetService("TeleportService"):Teleport(15432848623)
-end
 
 
-function ugc()
+local event = false
 
-end
-
-
-Sec:CreateToggle("Auto Kill Mobs", hhh)
-Sec:CreateToggle("Auto Farm Pos", h)
-Sec:CreateToggle("Auto Collect Items", hh)
-Sec:CreateToggle("Auto Talk to NPCs", npcs)
-Sec:CreateButton("Instant Page", page)
-Sec3:CreateButton("Tp Game Strangers", gametp)
-Sec3:CreateButton("Instant Tasks", ins)
-Sec2:CreateButton("Copy YouTube Link", copyy)
-Sec2:CreateButton("Copy Discord Link", copyd)
-
-game:GetService('Players').LocalPlayer.Idled:Connect(function()
-    game:GetService('VirtualUser'):CaptureController()
-    game:GetService('VirtualUser'):ClickButton2(Vector2.new())
+UL:AddTBtn(cfrm, "Auto Kill Mobs", false, function()
+hhh()
 end)
 
+UL:AddTBtn(cfrm, "Auto Farm Pos", false, function()
+h()
+end)
 
-local args = {
-    [1] = "DemogorgonHood"
-}
+UL:AddTBtn(cfrm, "Auto Collect Items", false, function()
+hh()
+end)
 
-game:GetService("ReplicatedStorage"):WaitForChild("RemoteFunctions"):WaitForChild("BuyUGC"):InvokeServer(unpack(args))
+UL:AddTBtn(cfrm, "Auto Talk NPCs", false, function()
+npcs()
+end)
 
+UL:AddBtn(cfrm, "Instant Page", function() page() end)
+local myOptionsButton, myOptionsFrame = UL:AddOBtn(cfrm, "Events UGC")
+UL:AddTBtn(myOptionsFrame, "Auto Event Ultraman", false, function() event = not event end)
 
+    
+    UL:AddText(crFrm, "By Script: OneCreatorX ")
+    UL:AddText(crFrm, "Create Script: 19/06/24 ")
+    UL:AddText(crFrm, "Update Script: --/--/--")
+    UL:AddText(crFrm, "Script Version: 0.6")
+    UL:AddBtn(crFrm, "Copy link YouTube", function() setclipboard("https://youtube.com/@onecreatorx") end)
+    UL:AddBtn(crFrm, "Copy link Discord", function() setclipboard("https://discord.com/invite/UNJpdJx7c4") end)
+    
+    game:GetService('Players').LocalPlayer.Idled:Connect(function()
+        game:GetService('VirtualUser'):CaptureController()
+        game:GetService('VirtualUser'):ClickButton2(Vector2.new())
+    end)
+
+spawn(function()
 while true do
     wait(0.1)
     pcall(Tk)
     pcall(collect)
 end
+end)
+
+
+spawn(function()
+  while true do
+    local ultraman = workspace:FindFirstChild("Ultraman")
+    if ultraman and event then
+
+      local player = game.Players.LocalPlayer
+      if player.Character then
+        local p = player.Character.PrimaryPart
+        for _, drone in pairs(ultraman.DroneSwarm.Back:GetChildren()) do
+pcall(function()
+            p.CFrame = drone.PrimaryPart.CFrame + Vector3.new(0, 2, 0)
+end)
+            local args = {
+              [1] = drone,
+              [2] = 500
+            }
+            game:GetService("ReplicatedStorage"):WaitForChild("RemoteEvents"):WaitForChild("DroneHit"):FireServer(unpack(args))
+end 
+      end
+    end
+
+    wait(0.1)
+  end
+end)
