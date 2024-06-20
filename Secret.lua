@@ -48,7 +48,7 @@ UL:AddTBtn(cfrm, "Auto Egg Pet UGC", false, function()
 end)
 
 local eggg = false
-UL:AddTBtn(cfrm, "Auto Egg Pet UGC", false, function() 
+UL:AddTBtn(cfrm, "Auto Hit Block", false, function() 
     eggg = not eggg
     while eggg do
         local area = workspace:WaitForChild("BreakablesByArea")
