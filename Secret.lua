@@ -33,19 +33,33 @@ end
 
 setreadonly(mt, true)
 
-UL:AddTBtn(cfrm, "Inject", false, function() 
+UL:AddTBtn(cfrm, "Inject DMG", false, function() 
     active = not active 
 end)
-
+local egge = Basic
 local pet = false
-UL:AddTBtn(cfrm, "Auto Egg Pet UGC", false, function() 
+UL:AddTBtn(cfrm, "Auto Open Egg", false, function() 
     pet = not pet
     while pet do
-        local args = { workspace:WaitForChild("Eggs"):WaitForChild("Rich Egg") }
+        local args = { workspace:WaitForChild("Eggs"):WaitForChild(egge) }
         game:GetService("ReplicatedStorage"):WaitForChild("EggHatchingRemotes"):WaitForChild("HatchServer"):InvokeServer(unpack(args))
         wait()
     end
 end)
+
+local EggB, EggF = UL:AddOBtn(cfrm, "Options Egg World")
+
+for _, e in (workspace.Eggs:GetChildren()) do
+    UL:AddBtn(EggF, e.Name, function()  egge = e.Name
+local StarterGui = game:GetService("StarterGui")
+StarterGui:SetCore("SendNotification", {
+    Title = "New Open Egg",
+    Text = "Is " .. e.Name,
+    Duration = 5,
+})
+
+ end)
+end
 
 local eggg = false
 UL:AddTBtn(cfrm, "Auto Hit Block", false, function() 
@@ -64,8 +78,8 @@ end)
 
 UL:AddText(crFrm, "By Script: OneCreatorX ")
 UL:AddText(crFrm, "Create Script: 20/06/24 ")
-UL:AddText(crFrm, "Update Script: --/--/--")
-UL:AddText(crFrm, "Script Version: 0.1")
+UL:AddText(crFrm, "Update Script: 23/06/--")
+UL:AddText(crFrm, "Script Version: 0.3")
 UL:AddBtn(crFrm, "Copy link YouTube", function() setclipboard("https://youtube.com/@onecreatorx") end)
 UL:AddBtn(crFrm, "Copy link Discord", function() setclipboard("https://discord.com/invite/UNJpdJx7c4") end)
 
