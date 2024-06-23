@@ -23,7 +23,7 @@ setreadonly(mt, false)
 mt.__index = function(instance, index)
     if active then
         if instance == damage and index == "Value" then
-            return 100
+            return 100000
         elseif instance == multiplier and index == "Value" then
             return 1000
         end
