@@ -78,6 +78,15 @@ end
 game:GetService("RunService").RenderStepped:Connect(function()
     local nearestCoin = findNearestCoin()
     if nearestCoin and a and ja then
+            spawn(function()
+    pcall(function()
+        for _, par in pairs(game.Players.LocalPlayer.Character:GetChildren()) do
+            if par:IsA("BasePart") then
+                par.CanCollide = false
+            end
+        end
+    end)
+end)
         collectCoin(p, nearestCoin)
     end
     wait()
