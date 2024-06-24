@@ -7,9 +7,9 @@ local sg = UL:CrSG("Default")
 local frm, cfrm, crFrm = UL:CrFrm(sg, gameName)
 
 UL:AddText(crFrm, "By Script: OneCreatorX ")
-UL:AddText(crFrm, "Create Script: 29/05/24 ")
-UL:AddText(crFrm, "Update Script: --/--/--")
-UL:AddText(crFrm, "Script Version: 0.1")
+UL:AddText(crFrm, "Create Script: 17/06/24 ")
+UL:AddText(crFrm, "Update Script: 24/06/24")
+UL:AddText(crFrm, "Script Version: 0.3")
 UL:AddBtn(crFrm, "Copy link YouTube", function() setclipboard("https://youtube.com/@onecreatorx") end)
 UL:AddBtn(crFrm, "Copy link Discord", function() setclipboard("https://discord.com/invite/UNJpdJx7c4") end)
 
@@ -32,7 +32,7 @@ end)
 
 local function findNearestCoin()
     local nearest, minDist = nil, math.huge
-    for _, coin in pairs(workspace:GetDescendants()) do
+    for _, coin in pairs(workspace["CollectableItem(s)"]:GetDescendants()) do
         if coin:IsA("BasePart") and coin:FindFirstChild("TouchInterest") and a then
             local dist = getHorizontalDistance(p.Character.HumanoidRootPart.Position, coin.Position)
             if dist < minDist then
@@ -68,25 +68,28 @@ local function collectCoin(player, coin)
                 ja = true
             else
                 humanoid.WalkToPoint = coinPos
-                humanoid.WalkSpeed = 17  -- Ajusta la velocidad de caminar según sea necesario
+                humanoid.WalkSpeed = 17 
             end
         end)
         wait()
     end
 end
 
+for _, object in ipairs(workspace:GetChildren()) do
+    if object.Name == "Terrain" and not object:IsA("Terrain") then
+        object:Destroy()
+    end
+end
+
+local can = workspace:FindFirstChild("CandyTrees")
+spawn(function()
+can:Destroy()
+    end)
+
 game:GetService("RunService").RenderStepped:Connect(function()
     local nearestCoin = findNearestCoin()
     if nearestCoin and a and ja then
-            spawn(function()
-    pcall(function()
-        for _, par in pairs(game.Players.LocalPlayer.Character:GetChildren()) do
-            if par:IsA("BasePart") then
-                par.CanCollide = false
-            end
-        end
-    end)
-end)
+ 
         collectCoin(p, nearestCoin)
     end
     wait()
