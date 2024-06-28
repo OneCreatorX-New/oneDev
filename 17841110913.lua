@@ -82,11 +82,14 @@ for _, object in ipairs(workspace:GetChildren()) do
 end
     end)
 
-local can = workspace:FindFirstChild("CandyTrees")
 spawn(function()
+local can = workspace:FindFirstChild("CandyTrees")
+        if can then
 can:Destroy()
+        end
     end)
-spawm(function()
+
+spawn(function()
 while true do
     local nearestCoin = findNearestCoin()
     if nearestCoin and a and ja then
