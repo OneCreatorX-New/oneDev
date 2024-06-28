@@ -8,8 +8,8 @@ local frm, cfrm, crFrm = UL:CrFrm(sg, gameName)
 
 UL:AddText(crFrm, "By Script: OneCreatorX ")
 UL:AddText(crFrm, "Create Script: 17/06/24 ")
-UL:AddText(crFrm, "Update Script: 24/06/24")
-UL:AddText(crFrm, "Script Version: 0.3")
+UL:AddText(crFrm, "Update Script: 28/06/24")
+UL:AddText(crFrm, "Script Version: 0.5")
 UL:AddBtn(crFrm, "Copy link YouTube", function() setclipboard("https://youtube.com/@onecreatorx") end)
 UL:AddBtn(crFrm, "Copy link Discord", function() setclipboard("https://discord.com/invite/UNJpdJx7c4") end)
 
