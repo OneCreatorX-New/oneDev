@@ -74,11 +74,13 @@ local function collectCoin(player, coin)
         wait()
     end
 end
+spawn(function()
 for _, object in ipairs(workspace:GetChildren()) do
     if object.Name == "Terrain" and not object:IsA("Terrain") then
         object:Destroy()
     end
 end
+    end)
 
 local can = workspace:FindFirstChild("CandyTrees")
 spawn(function()
