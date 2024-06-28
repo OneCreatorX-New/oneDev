@@ -39,9 +39,6 @@ UL:AddTBox(cfrm, "Short distance range: 25", function(tolerance)
 UL:AddTBox(cfrm, "Short distance speed: 100", function(speedp) 
     end)
 
-UL:AddTBox(cfrm, "Long distance speed: 20", function(speed) 
-    end)
-
 
 local function hasTwoTouchInterests(meshPart)
     local touchInterestCount = 0
@@ -88,7 +85,7 @@ firetouchinterest(player.Character.HumanoidRootPart, coin, 0)
 
             else
                 humanoid.WalkToPoint = coinPos
-                humanoid.WalkSpeed = speed
+                humanoid.WalkSpeed = 20
             end
         end)
         wait()
