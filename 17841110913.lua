@@ -24,22 +24,22 @@ end
 
 local a = false
 local ja = true
-local tolerance = 25
-local speed = 17
+local tolerance = 18
+local speed = 20
 local t = 0.5
-local speedp = 50
+local speedp = 100
 
 UL:AddTBtn(cfrm, "Auto Candies", false, function() 
     a = not a
     ja = true
 end)
 
-UL:AddTBox(cfrm, "Distance Speed Range; 20 ", function(tolerance) 
+UL:AddTBox(cfrm, "Distance Speed Range; 18 ", function(tolerance) 
     end)
-UL:AddTBox(cfrm, "Speed Power; 50 ", function(speedp) 
+UL:AddTBox(cfrm, "Speed Power; 100 ", function(speedp) 
     end)
 
-UL:AddTBox(cfrm, "Speed Player: 17", function(speed) 
+UL:AddTBox(cfrm, "Speed Player: 20", function(speed) 
     end)
 
 
