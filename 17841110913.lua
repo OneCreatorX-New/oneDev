@@ -24,11 +24,24 @@ end
 
 local a = false
 local ja = true
+local tolerance = 25
+local speed = 17
+local t = 0.5
+local speedp = 50
 
 UL:AddTBtn(cfrm, "Auto Candies", false, function() 
     a = not a
     ja = true
 end)
+
+UL:AddTBox(cfrm, "Distance Speed Range; 20 ", function(tolerance) 
+    end)
+UL:AddTBox(cfrm, "Speed Power; 50 ", function(speedp) 
+    end)
+
+UL:AddTBox(cfrm, "Speed Player: 17", function(speed) 
+    end)
+
 
 local function hasTwoTouchInterests(meshPart)
     local touchInterestCount = 0
@@ -55,7 +68,6 @@ end
 
 local function collectCoin(player, coin)
     local humanoid = player.Character:WaitForChild("Humanoid")
-    local tolerance = 10
     
     if coin and coin.Parent and a then
         pcall(function()
@@ -64,11 +76,17 @@ local function collectCoin(player, coin)
             
             if dist <= tolerance then
                 
-   coin.Position = player.Character.HumanoidRootPart.Position
+    humanoid.WalkSpeed = speedp
+ja = false
+firetouchinterest(player.Character.HumanoidRootPart, coin, 0)
+        wait()
+        firetouchinterest(player.Character.HumanoidRootPart, coin, 1)
+
                 ja = true
+
             else
                 humanoid.WalkToPoint = coinPos
-                humanoid.WalkSpeed = 17 
+                humanoid.WalkSpeed = speed
             end
         end)
         wait()
@@ -89,12 +107,14 @@ can:Destroy()
         end
     end)
 
-spawn(function()
+
 while true do
     local nearestCoin = findNearestCoin()
     if nearestCoin and a and ja then
+spawn(function()
         collectCoin(p, nearestCoin)
+end)
     end
     wait()
 end
-    end)
+    
