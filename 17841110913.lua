@@ -24,7 +24,7 @@ end
 
 local a = false
 local ja = true
-local tolerance = 18
+local tolerance = 25
 local speed = 20
 local t = 0.5
 local speedp = 100
@@ -34,7 +34,7 @@ UL:AddTBtn(cfrm, "Auto Candies", false, function()
     ja = true
 end)
 
-UL:AddTBox(cfrm, "Short distance range: 18", function(tolerance) 
+UL:AddTBox(cfrm, "Short distance range: 25", function(tolerance) 
     end)
 UL:AddTBox(cfrm, "Short distance speed: 100", function(speedp) 
     end)
@@ -75,7 +75,9 @@ local function collectCoin(player, coin)
             local dist = getHorizontalDistance(playerPos, coinPos)
             
             if dist <= tolerance then
-                
+           spawn(function()
+humanoid.WalkToPoint = coinPos
+end)     
     humanoid.WalkSpeed = speedp
 ja = false
 firetouchinterest(player.Character.HumanoidRootPart, coin, 0)
