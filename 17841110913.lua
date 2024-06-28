@@ -30,10 +30,20 @@ UL:AddTBtn(cfrm, "Auto Candies", false, function()
     ja = true
 end)
 
+local function hasTwoTouchInterests(meshPart)
+    local touchInterestCount = 0
+    for _, child in ipairs(meshPart:GetChildren()) do
+        if child:IsA("TouchTransmitter") then
+            touchInterestCount = touchInterestCount + 1
+        end
+    end
+    return touchInterestCount == 2
+end
+
 local function findNearestCoin()
     local nearest, minDist = nil, math.huge
     for _, coin in pairs(workspace["CollectableItem(s)"]:GetDescendants()) do
-        if coin:IsA("BasePart") and coin:FindFirstChild("TouchInterest") and a then
+        if coin:IsA("MeshPart") and hasTwoTouchInterests(coin) and a then
             local dist = getHorizontalDistance(p.Character.HumanoidRootPart.Position, coin.Position)
             if dist < minDist then
                 minDist, nearest = dist, coin
@@ -43,28 +53,18 @@ local function findNearestCoin()
     return nearest
 end
 
-local function calculateVelocity(targetPos, speed)
-    local playerPos = p.Character.HumanoidRootPart.Position
-    return (targetPos - playerPos).unit * speed
-end
-
 local function collectCoin(player, coin)
     local humanoid = player.Character:WaitForChild("Humanoid")
-    local tolerance, maxDist = 2, 2
+    local tolerance = 10
     
     if coin and coin.Parent and a then
         pcall(function()
             local playerPos, coinPos = humanoid.RootPart.Position, coin.Position
             local dist = getHorizontalDistance(playerPos, coinPos)
             
-            if dist <= tolerance and dist <= maxDist then
-                if dist > 2 then coin.Transparency = 1 end
-                ja = false
-                wait(0.1)
-
-                spawn(function()
-                    coin:Destroy()
-                end)
+            if dist <= tolerance then
+                
+   coin.Position = player.Character.HumanoidRootPart.Position
                 ja = true
             else
                 humanoid.WalkToPoint = coinPos
@@ -74,7 +74,6 @@ local function collectCoin(player, coin)
         wait()
     end
 end
-
 for _, object in ipairs(workspace:GetChildren()) do
     if object.Name == "Terrain" and not object:IsA("Terrain") then
         object:Destroy()
@@ -85,12 +84,12 @@ local can = workspace:FindFirstChild("CandyTrees")
 spawn(function()
 can:Destroy()
     end)
-
-game:GetService("RunService").RenderStepped:Connect(function()
+spawm(function()
+while true do
     local nearestCoin = findNearestCoin()
     if nearestCoin and a and ja then
- 
         collectCoin(p, nearestCoin)
     end
     wait()
-end)
+end
+    end)
