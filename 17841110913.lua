@@ -34,12 +34,12 @@ UL:AddTBtn(cfrm, "Auto Candies", false, function()
     ja = true
 end)
 
-UL:AddTBox(cfrm, "Distance Speed Range; 18 ", function(tolerance) 
+UL:AddTBox(cfrm, "Short distance range: 18", function(tolerance) 
     end)
-UL:AddTBox(cfrm, "Speed Power; 100 ", function(speedp) 
+UL:AddTBox(cfrm, "Short distance speed: 100", function(speedp) 
     end)
 
-UL:AddTBox(cfrm, "Speed Player: 20", function(speed) 
+UL:AddTBox(cfrm, "Long distance speed: 20", function(speed) 
     end)
 
 
