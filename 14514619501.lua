@@ -91,7 +91,7 @@ local userDirectory = workspace:FindFirstChild(userDirectoryName)
                     local args = {
                         [1] = {
                             [1] = "PetInteractAction",
-                            [2] = "\27",
+                            [2] = "'",
                             [3] = {
                                 [1] = "\1",
                                 [2] = {
@@ -99,7 +99,7 @@ local userDirectory = workspace:FindFirstChild(userDirectoryName)
                                     [2] = action
                                 }
                             },
-                            [4] = "\16"
+                            [4] = "\28"
                         }
                     }
                     
