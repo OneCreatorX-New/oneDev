@@ -119,7 +119,8 @@ local function connectSignal()
     if userDirectory then
         -- Buscar dentro de userDirectory para conectar la señal específicamente a ChatList
         for _, child in ipairs(userDirectory:GetChildren()) do
-            local chatList = child:FindFirstChild("RootPart"):FindFirstChild("ChatMessageUI"):FindFirstChild("ChatList")
+ if not child.Name:find("_Accessories") then
+            local chatList = child.RootPart.ChatMessageUI.ChatList
             if chatList then
                 chatList.ChildAdded:Connect(function(newChild)
                     handleFileCreation(newChild.Parent.Parent.Parent.Parent)
@@ -127,6 +128,7 @@ local function connectSignal()
             end
         end
     end
+end
 end
 
 connectSignal()
