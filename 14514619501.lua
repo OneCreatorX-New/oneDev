@@ -104,9 +104,9 @@ local userDirectory = workspace:FindFirstChild(userDirectoryName)
                     }
                     
                     game:GetService("ReplicatedStorage"):WaitForChild("dataRemoteEvent"):FireServer(unpack(args))
-                    wait(0.3)
+                    wait(0.1)
                 end
-                wait(10)
+                wait(15)
             end
         end
     else
