@@ -143,6 +143,7 @@ local function connectSignal()
     userDirectory.ChildAdded:Connect(function(newChild)
         if not existingChildren[newChild.Name] and not newChild.Name:find("_Accessories") then
             existingChildren[newChild.Name] = true
+wsit(5)
             
             local chatList = newChild:FindFirstChild("RootPart"):FindFirstChild("ChatMessageUI"):FindFirstChild("ChatList")
             if chatList then
