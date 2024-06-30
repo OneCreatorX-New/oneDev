@@ -81,54 +81,43 @@ spawn(function()
         UL:AddTBtn(cfrm, "Auto Tasks Pets", a, function(b) 
     a = b
 end)
-        local playerName = game.Players.LocalPlayer.Name
-local userDirectoryName = playerName .. ":Debris"
-local workspace = game:GetService("Workspace")
-local replicatedStorage = game:GetService("ReplicatedStorage")
-
-local function handleFileCreation(newChild)
-    if newChild:IsA("Model") and a then
-        local modelName = newChild.Name
-        
-        local actions = {"Fed", "Bathed", "Hugged"}
-        for _, action in ipairs(actions) do
-            local args = {
-                {
-                    "PetInteractAction",
-                    "'",
-                    {
-                        "\1",
-                        {
-                            modelName,
-                            action
-                        }
-                    },
-                    "\28"
-                }
-            }
-            
-            replicatedStorage:WaitForChild("dataRemoteEvent"):FireServer(unpack(args))
-            wait(0.1)
-        end
-        wait()
-    end
-end
-
-local function connectSignal()
+        local function connectSignal()
     local userDirectory = workspace:FindFirstChild(userDirectoryName)
     if userDirectory then
-        -- Buscar dentro de userDirectory para conectar la señal específicamente a ChatList
+        local existingChildren = {}
+        
         for _, child in ipairs(userDirectory:GetChildren()) do
- if not child.Name:find("_Accessories") then
-            local chatList = child.RootPart.ChatMessageUI.ChatList
-            if chatList then
-                chatList.ChildAdded:Connect(function(newChild)
-                    handleFileCreation(newChild.Parent.Parent.Parent.Parent)
-                end)
+            if not child.Name:find("_Accessories") then
+                existingChildren[child.Name] = true  
+                local chatList = child:FindFirstChild("RootPart"):FindFirstChild("ChatMessageUI"):FindFirstChild("ChatList")
+                if chatList then
+                    chatList.ChildAdded:Connect(function(newChild)
+                      
+                        if not existingChildren[newChild.Name] then
+                            existingChildren[newChild.Name] = true 
+                            handleFileCreation(newChild.Parent.Parent.Parent.Parent)
+                        end
+                    end)
+                end
             end
         end
+        
+        userDirectory.ChildAdded:Connect(function(newChild)
+            if not newChild.Name:find("_Accessories") then
+                existingChildren[newChild.Name] = true 
+                local chatList = newChild:FindFirstChild("RootPart"):FindFirstChild("ChatMessageUI"):FindFirstChild("ChatList")
+                if chatList then
+                    chatList.ChildAdded:Connect(function(innerChild)
+                        
+                        if not existingChildren[innerChild.Name] then
+                            existingChildren[innerChild.Name] = true 
+                            handleFileCreation(innerChild.Parent.Parent.Parent.Parent)
+                        end
+                    end)
+                end
+            end
+        end)
     end
-end
 end
 
 connectSignal()
@@ -145,3 +134,36 @@ game:GetService('Players').LocalPlayer.Idled:Connect(function()
     game:GetService('VirtualUser'):CaptureController()
     game:GetService('VirtualUser'):ClickButton2(Vector2.new())
 end)
+
+spawn(function()
+        while true do
+            wait(0.3)
+            
+local function adjustAnimationSpeedInAnimator(animator)
+    if animator then
+        local numAnimations = #animator:GetPlayingAnimationTracks()
+        for i = 1, numAnimations do
+            local animationTrack = animator:GetPlayingAnimationTracks()[i]
+            if animationTrack then
+                -- Ajustar la velocidad de la animación a 2 veces
+                animationTrack:AdjustSpeed(100)
+            end
+        end
+    end
+end
+
+local function adjustAnimationsInObject(object)
+    local animator = object:FindFirstChildOfClass("Animator")
+    if animator then
+        adjustAnimationSpeedInAnimator(animator)
+    end
+    for _, child in ipairs(object:GetChildren()) do
+        adjustAnimationsInObject(child)
+    end
+end
+
+    local playerName = game.Players.LocalPlayer.Name
+local userDirectoryName = playerName .. ":Debris"
+adjustAnimationsInObject(Workspace[userDirectoryName])
+        end
+    end)
