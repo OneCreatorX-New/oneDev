@@ -65,7 +65,7 @@ UL:AddTBtn(cfrm, "Auto Claim Gift", a, function(b)
                         [1] = "\1",
                         [2] = "BERRIES_" .. i .. "00"
                     },
-                    [2] = "-"
+                    [2] = "9"
                 }
             }
 
