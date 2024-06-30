@@ -82,11 +82,15 @@ spawn(function()
     a = b
 end)
 
-        local userDirectoryName = playerName .. ":Debris"  -- Asegúrate de tener definido playerName correctamente
+        
+
+local playerName = game.Players.LocalPlayer.Name
+local userDirectoryName = playerName .. ":Debris"
 local workspace = game:GetService("Workspace")
 local replicatedStorage = game:GetService("ReplicatedStorage")
 
-local processedChildren = {}  -- Tabla para almacenar nombres de hijos procesados
+-- Tabla para almacenar los nombres de los hijos existentes
+local existingChildren = {}
 
 local function handleFileCreation(newChild)
     if newChild:IsA("Model") then
@@ -119,23 +123,39 @@ end
 local function connectSignal()
     local userDirectory = workspace:FindFirstChild(userDirectoryName)
     if userDirectory then
+        -- Conectar señal a cada hijo de userDirectory
         for _, child in ipairs(userDirectory:GetChildren()) do
-            if not child.Name:find("_Accessories") and not processedChildren[child.Name] then
-                processedChildren[child.Name] = true  -- Marcar el hijo como procesado
-                
+            if not child.Name:find("_Accessories") then
                 local chatList = child:FindFirstChild("RootPart"):FindFirstChild("ChatMessageUI"):FindFirstChild("ChatList")
                 if chatList then
                     chatList.ChildAdded:Connect(function(newChild)
                         handleFileCreation(newChild.Parent.Parent.Parent.Parent)
                     end)
                 end
+                
+                -- Guardar el nombre del hijo en la tabla
+                existingChildren[child.Name] = true
             end
         end
     end
+    
+    -- Conectar señal al directorio para detectar nuevos hijos
+    userDirectory.ChildAdded:Connect(function(newChild)
+        if not existingChildren[newChild.Name] and not newChild.Name:find("_Accessories") then
+            existingChildren[newChild.Name] = true
+            
+            local chatList = newChild:FindFirstChild("RootPart"):FindFirstChild("ChatMessageUI"):FindFirstChild("ChatList")
+            if chatList then
+                chatList.ChildAdded:Connect(function(child)
+                    handleFileCreation(child.Parent.Parent.Parent.Parent)
+                end)
+            end
+        end
+    end)
 end
 
 connectSignal()
-        
+
     end)
 
 UL:AddText(crFrm, "By Script: OneCreatorX ")
