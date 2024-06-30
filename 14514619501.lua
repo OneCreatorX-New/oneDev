@@ -81,46 +81,61 @@ spawn(function()
         UL:AddTBtn(cfrm, "Auto Tasks Pets", a, function(b) 
     a = b
 end)
-        local function connectSignal()
+
+        local userDirectoryName = playerName .. ":Debris"  -- Asegúrate de tener definido playerName correctamente
+local workspace = game:GetService("Workspace")
+local replicatedStorage = game:GetService("ReplicatedStorage")
+
+local processedChildren = {}  -- Tabla para almacenar nombres de hijos procesados
+
+local function handleFileCreation(newChild)
+    if newChild:IsA("Model") then
+        local modelName = newChild.Name
+        
+        local actions = {"Fed", "Bathed", "Hugged"}
+        for _, action in ipairs(actions) do
+            local args = {
+                {
+                    "PetInteractAction",
+                    "'",
+                    {
+                        "\1",
+                        {
+                            modelName,
+                            action
+                        }
+                    },
+                    "\28"
+                }
+            }
+            
+            replicatedStorage:WaitForChild("dataRemoteEvent"):FireServer(unpack(args))
+            wait(0.1)
+        end
+        wait()
+    end
+end
+
+local function connectSignal()
     local userDirectory = workspace:FindFirstChild(userDirectoryName)
     if userDirectory then
-        local existingChildren = {}
-        
         for _, child in ipairs(userDirectory:GetChildren()) do
-            if not child.Name:find("_Accessories") then
-                existingChildren[child.Name] = true  
+            if not child.Name:find("_Accessories") and not processedChildren[child.Name] then
+                processedChildren[child.Name] = true  -- Marcar el hijo como procesado
+                
                 local chatList = child:FindFirstChild("RootPart"):FindFirstChild("ChatMessageUI"):FindFirstChild("ChatList")
                 if chatList then
                     chatList.ChildAdded:Connect(function(newChild)
-                      
-                        if not existingChildren[newChild.Name] then
-                            existingChildren[newChild.Name] = true 
-                            handleFileCreation(newChild.Parent.Parent.Parent.Parent)
-                        end
+                        handleFileCreation(newChild.Parent.Parent.Parent.Parent)
                     end)
                 end
             end
         end
-        
-        userDirectory.ChildAdded:Connect(function(newChild)
-            if not newChild.Name:find("_Accessories") then
-                existingChildren[newChild.Name] = true 
-                local chatList = newChild:FindFirstChild("RootPart"):FindFirstChild("ChatMessageUI"):FindFirstChild("ChatList")
-                if chatList then
-                    chatList.ChildAdded:Connect(function(innerChild)
-                        
-                        if not existingChildren[innerChild.Name] then
-                            existingChildren[innerChild.Name] = true 
-                            handleFileCreation(innerChild.Parent.Parent.Parent.Parent)
-                        end
-                    end)
-                end
-            end
-        end)
     end
 end
 
 connectSignal()
+        
     end)
 
 UL:AddText(crFrm, "By Script: OneCreatorX ")
