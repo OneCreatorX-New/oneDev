@@ -139,21 +139,30 @@ local function connectSignal()
         end
     end
     
-    -- Conectar señal al directorio para detectar nuevos hijos
+
     userDirectory.ChildAdded:Connect(function(newChild)
-        if not existingChildren[newChild.Name] and not newChild.Name:find("_Accessories") then
-            existingChildren[newChild.Name] = true
-wsit(5)
-            
-            local chatList = newChild:FindFirstChild("RootPart"):FindFirstChild("ChatMessageUI"):FindFirstChild("ChatList")
-            if chatList then
-                chatList.ChildAdded:Connect(function(child)
-                    handleFileCreation(child.Parent.Parent.Parent.Parent)
-                end)
-            end
+        wait(4)
+
+local userDirectory = workspace:FindFirstChild(userDirectoryName)
+    if userDirectory then
+        -- Conectar señal a cada hijo de userDirectory
+        for _, child in ipairs(userDirectory:GetChildren()) do
+            if not child.Name:find("_Accessories") then
+                local chatList = child:FindFirstChild("RootPart"):FindFirstChild("ChatMessageUI"):FindFirstChild("ChatList")
+                if chatList then
+                    chatList.ChildAdded:Connect(function(newChild)
+                        handleFileCreation(newChild.Parent.Parent.Parent.Parent)
+                    end)
+                end
+                
+                -- Guardar el nombre del hijo en la tabla
+                existingChildren[child.Name] = true
+                            end
         end
+                    end
+                
     end)
-end
+        end
 
 connectSignal()
 
