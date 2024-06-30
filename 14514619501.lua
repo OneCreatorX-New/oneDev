@@ -104,9 +104,9 @@ local userDirectory = workspace:FindFirstChild(userDirectoryName)
                     }
                     
                     game:GetService("ReplicatedStorage"):WaitForChild("dataRemoteEvent"):FireServer(unpack(args))
-                    wait(3.5)
+                    wait(0.3)
                 end
-                wait(2)
+                wait(0.5)
             end
         end
     else
@@ -117,7 +117,7 @@ end)
 
 UL:AddText(crFrm, "By Script: OneCreatorX ")
 UL:AddText(crFrm, "Create Script: 29/05/24 ")
-UL:AddText(crFrm, "Update Script: 30/05/24")
+UL:AddText(crFrm, "Update Script: 29/06/24")
 UL:AddText(crFrm, "Script Version: 0.2")
 UL:AddBtn(crFrm, "Copy link YouTube", function() setclipboard("https://youtube.com/@onecreatorx") end)
 UL:AddBtn(crFrm, "Copy link Discord", function() setclipboard("https://discord.com/invite/UNJpdJx7c4") end)
