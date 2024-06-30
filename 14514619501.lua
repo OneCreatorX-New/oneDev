@@ -76,7 +76,7 @@ UL:AddTBtn(cfrm, "Auto Claim Gift", a, function(b)
 end)
 
 
-spawm(function()
+spawn(function()
         local a
         UL:AddTBtn(cfrm, "Auto Tasks Pets", a, function(b) 
     a = b
