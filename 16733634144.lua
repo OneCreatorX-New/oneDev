@@ -24,10 +24,14 @@ a = b
 while a do
 for _, obj in ipairs(workspace.Spawnables:GetChildren()) do
 if a then
+
+spawn(function()
+game.Players.LocalPlayer.Character.Humanoid.WalkToPoint = Vector3.new(0, 0, 0)
+end)
 game.Players.LocalPlayer.Character.PrimaryPart.CFrame = obj.CFrame
-                    spawn(function()
-                    game.Players.LocalPlayer.Character.Humanoid:MoveTo(obj.Position)
-                        end)
+                    
+                    
+                        
 wait(0.1)
     local args = {
     [1] = tostring(obj.Name)
