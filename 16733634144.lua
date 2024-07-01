@@ -25,6 +25,9 @@ while a do
 for _, obj in ipairs(workspace.Spawnables:GetChildren()) do
 if a then
 game.Players.LocalPlayer.Character.PrimaryPart.CFrame = obj.CFrame
+                    spawn(function()
+                    game.Players.LocalPlayer.Character.Humanoid:MoveTo(obj.Position)
+                        end)
 wait(0.1)
     local args = {
     [1] = tostring(obj.Name)
